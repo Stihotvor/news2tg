@@ -1,14 +1,3 @@
-  test:
-    build: .
-    command: pytest --cov=backend --cov=frontend tests/
-    volumes:
-      - .:/app
-    env_file:
-      - .env
-    depends_on:
-      - backend
-      - redis
-      - db
 version: '3.9'
 services:
   backend:
@@ -18,10 +7,23 @@ services:
       - .:/app
     env_file:
       - .env
+    ports:
+      - "8000:8000"
     depends_on:
       - db
       - redis
       - chroma
+  frontend:
+    build: ./frontend
+    command: python main.py
+    volumes:
+      - ./frontend:/app
+    env_file:
+      - .env
+    ports:
+      - "8083:8080"
+    depends_on:
+      - backend
   celery:
     build: .
     command: celery -A backend.celery_worker worker --loglevel=info
@@ -66,9 +68,21 @@ services:
     image: adminer
     restart: always
     ports:
-      - 8080:8080
+      - 8082:8080
     depends_on:
       - db
+  test:
+    build: .
+    command: pytest --cov=backend --cov=frontend tests/
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - backend
+      - redis
+      - db
+      
 volumes:
   pgdata:
   chroma_data:
