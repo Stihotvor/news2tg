@@ -1,0 +1,24 @@
+fastapi
+uvicorn[standard]
+pydantic
+sqlalchemy
+alembic
+celery
+redis
+python-dotenv
+psycopg2-binary
+langchain
+llama-index
+chromadb
+google-api-python-client
+python-telegram-bot
+jinja2
+nicegui
+httpx
+aiohttp
+loguru
+# Testing
+pytest
+pytest-cov
+pytest-asyncio
+pytest-mock

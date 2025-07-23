@@ -1,0 +1,12 @@
+<b>{{ article.title }}</b>
+
+{{ article.summary }}
+
+<a href="{{ article.source_url }}">Read more</a>
+
+{% if article.topic or article.language %}
+<code>
+{% if article.topic %}#{{ article.topic|lower }} {% endif %}
+{% if article.language %}🌐 {{ article.language|upper }}{% endif %}
+</code>
+{% endif %}
